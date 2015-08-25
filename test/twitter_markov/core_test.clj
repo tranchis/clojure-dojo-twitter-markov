@@ -54,6 +54,56 @@
    }
   )
 
+(def final-structure
+  {
+   "i" {
+         :count 2,
+         :children {
+                      "know" 2
+                      }
+         },
+   "know" {
+            :count 3,
+            :children {
+                         "exactly" 1,
+                         "nothing" 1
+                         }
+            },
+   "exactly" {
+               :count 1,
+               :children {
+                            "what" 1
+                            }
+               },
+   "what" {
+            :count 1,
+            :children {
+                         "happened" 1
+                         }
+            },
+   "happened" {
+                :count 1,
+                :children {
+                             "here" 1
+                             }
+                },
+   "here" {
+            :count 1,
+            :children {}
+            },
+   "nothing" {
+               :count 1,
+               :children {}
+               },
+   "you" {
+           :count 1,
+           :children {
+                        "know" 1
+                        }
+           }
+   }
+  )
+
 (def dirty-tweets
   ["I, know exactly, what,... happened here"
    "...   I #know nothing"
@@ -79,6 +129,8 @@
       (phrase->structure (first dummy-clean-tweets))
       =>
       first-structure
-      )
+      (user->structure dummy-clean-tweets)
+      =>
+      final-structure)
 
 

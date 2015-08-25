@@ -23,4 +23,12 @@
                   (one-word-structure word pairs phrase))
                 all-words))))
 
+(defn merge-structures [s1 s2]
+  {:count (+ (:count s1) (:count s2))
+   :children (merge-with + (:children s1) (:children s2))})
+
+(defn user->structure [user]
+  "User is a sequence of phrases (tweets)"
+  (let [structures (map phrase->structure user)]
+    (apply merge-with merge-structures structures)))
 
