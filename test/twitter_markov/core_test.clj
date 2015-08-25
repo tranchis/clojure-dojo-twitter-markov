@@ -9,53 +9,50 @@
    "know" {:count 1
            :children {}}})
 
-(def final-structure
+(def simple-structure-with-simple-rep
+  {"you" {:count 2
+          :children {"know" 2}}
+   "know" {:count 2
+           :children {"you" 1}}})
+
+(def first-structure
   {
-   "I" {
-        "count" 2,
-        "children" {
-                    "know" 2
+   "i" {
+        :count 1,
+        :children {
+                    "know" 1
                     }
-        "know" {
-                "count" 3,
-                "children" {
-                            "exactly" 1,
-                            "nothing" 1
-                            }
-                },
-        "exactly" {
-                   "count" 1,
-                   "children" {
-                               "what" 1
-                               }
-                   },
-        "what" {
-                "count" 1,
-                "children" {
-                            "happened" 1
-                            }
-                },
-	"happened" {
-                    "count" 1,
-                    "children" {
-                                "here" 1
-                                }
-                    },
-	"here" {
-                "count" 1,
-                "children" {}
-                },
-	"nothing" {
-                   "count" 1,
-                   "children" {}
-                   },
-	"you" {
-               "count" 1
-               "children" {
-                           "know" 1
+        },
+   "know" {
+           :count 1,
+           :children {
+                       "exactly" 1,
+                       }
+           },
+   "exactly" {
+              :count 1,
+              :children {
+                          "what" 1
+                          }
+              },
+   "what" {
+           :count 1,
+           :children {
+                       "happened" 1
+                       }
+           },
+   "happened" {
+               :count 1,
+               :children {
+                           "here" 1
                            }
-               }}
-   })
+               },
+   "here" {
+           :count 1,
+           :children {}
+           }
+   }
+  )
 
 (def dirty-tweets
   ["I, know exactly, what,... happened here"
@@ -68,12 +65,20 @@
    "You know"])
 
 (def dummy-clean-tweets
-  [["i" "know" "exactly" "what" "happened" "there"]
+  [["i" "know" "exactly" "what" "happened" "here"]
    ["i" "know" "nothing"]
    ["you" "know"]])
 
 (fact "Structures are generated correctly wrt each phrase"
       (phrase->structure (last dummy-clean-tweets))
       =>
-      simple-structure)
+      simple-structure
+      (phrase->structure ["you" "know" "you" "know"])
+      =>
+      simple-structure-with-simple-rep
+      (phrase->structure (first dummy-clean-tweets))
+      =>
+      first-structure
+      )
+
 
